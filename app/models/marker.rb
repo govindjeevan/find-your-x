@@ -2,4 +2,35 @@ class Marker < ApplicationRecord
   acts_as_mappable :default_units => :kms,
                    :default_formula => :sphere,
                    :distance_field_name => :distance
+
+  def colour
+    case self.speaker.to_i
+    when 1
+      "#eb3734"
+    when 2
+      "#0098f0"
+    when 3
+      "#24a1a3"
+    when 4
+      "#34ebeb"
+    when 5
+      "#eb34e2"
+    when 6
+      "#e0dd1b"
+    when 7
+      "#4d38c2"
+    when 8
+      "#fa7000"
+    when 9
+      "#003e42"
+    when 10
+      "#a6e1ff"
+    when 11
+      "#26734c"
+    when 12
+      "#691a00"
+    end
+  end
+
+
 end

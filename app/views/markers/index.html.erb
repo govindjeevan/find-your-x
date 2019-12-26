@@ -20,7 +20,6 @@
         var map = new google.maps.Map(
             document.getElementById('map'), {zoom: 14, center: uluru});
         // The marker, positioned at Uluru
-        var marker = new google.maps.Marker({position: uluru, map: map});
         var infowindow = new google.maps.InfoWindow();
 
         var marker, i;
@@ -28,6 +27,12 @@
 
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(<%=m.lat %>, <%=m.lng %>),
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    strokeColor: "<%=m.colour %>",
+                    scale: 3
+                },
+                title: "<%=m.speaker %>",
                 map: map
             });
 
