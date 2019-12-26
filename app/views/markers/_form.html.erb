@@ -1,3 +1,14 @@
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key="></script>
+<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+<style type="text/css">
+  #map {
+    width: 100%;
+    height: 480px;
+  }
+</style>
+
+
 <%= form_with(model: marker, local: true) do |form| %>
   <% if marker.errors.any? %>
     <div id="error_explanation">
@@ -25,3 +36,34 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+
+<div id="map"></div>
+<br>
+<p>On idle position: <span id="onIdlePositionView"></span></p>
+<p>On click position: <span id="onClickPositionView"></span></p>
+<script>
+    // Get element references
+    var confirmBtn = document.getElementById('confirmPosition');
+    var onClickPositionView = document.getElementById('onClickPositionView');
+    var onIdlePositionView = document.getElementById('onIdlePositionView');
+    var latField = document.getElementById('marker_lat');
+    var lngField = document.getElementById('marker_lng');
+
+    // Initialize locationPicker plugin
+    var lp = new locationPicker('map', {
+        setCurrentPosition: true, // You can omit this, defaults to true
+    }, {
+        zoom: 15 // You can set any google map options here, zoom defaults to 15
+    });
+
+    // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+    google.maps.event.addListener(lp.map, 'idle', function (event) {
+        // Get current location and show it in HTML
+        var location = lp.getMarkerPosition();
+        onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+        latField.value = location.lat.toString();
+        lngField.value = location.lng.toString();
+    });
+</script>
+
