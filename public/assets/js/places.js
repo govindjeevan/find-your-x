@@ -30,24 +30,6 @@ window.onload = () => {
     }
 };
 
-function staticLoadPlaces() {
-    return [
-        {
-            name: "Your place name",
-            location: {
-                lat: 0, // change here latitude if using static data
-                lng: 0, // change here longitude if using static data
-            }
-        },
-        {
-            name: 'Another place name',
-            location: {
-                lat: 0,
-                lng: 0,
-            }
-        }
-    ];
-}
 
 // getting places from REST APIs
 function dynamicLoadPlaces(position) {
@@ -95,7 +77,7 @@ function renderPlaces(places) {
         icon.setAttribute('src', '/assets/img/map-marker.png');
 
         // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
-        icon.setAttribute('scale', '20, 20');
+        icon.setAttribute('scale', '10, 10');
 
         icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
 
