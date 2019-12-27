@@ -2,7 +2,6 @@ class MarkersController < ApplicationController
   before_action :set_marker, only: [:show, :edit, :update, :destroy]
 
   def experience
-    @markers = Marker.all
   end
 
   # GET /markers

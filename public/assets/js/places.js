@@ -5,8 +5,23 @@ window.onload = () => {
     method = 'static';
 
     if (method === 'static') {
-        let places = staticLoadPlaces();
-        renderPlaces(places);
+        // let places = staticLoadPlaces();
+        // renderPlaces(places);
+
+        getPlaces().then(function(data) {
+            var places = [];
+            for (let i = 0; i < data.length; i++) {
+                var obj = {
+                    name: "Place name",
+                    location: {
+                        lat: parseFloat(data[i].lat),
+                        lng: parseFloat(data[i].lng)
+                    }
+                };
+                places.push(obj);
+            }
+            renderPlaces(places);
+        });
     }
 
     if (method !== 'static') {
@@ -29,6 +44,24 @@ window.onload = () => {
         );
     }
 };
+
+function getPlaces(){
+    return $.getJSON("/markers.json").then(function(data){
+        return data;
+    });
+}
+
+function staticLoadPlaces() {
+    return [
+        {
+            name: "Your place name",
+            location: {
+                lat: 44.493271, // change here latitude if using static data
+                lng: 11.326040, // change here longitude if using static data
+            }
+        },
+    ];
+}
 
 
 // getting places from REST APIs
