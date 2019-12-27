@@ -1,24 +1,25 @@
-
 window.onload = () => {
     let method = 'dynamic';
 
-    // if you want to statically add places, de-comment following line:
-    // method = 'static';
+    // if you want to statically add places, de-comment following line
+    method = 'static';
+
     if (method === 'static') {
         let places = staticLoadPlaces();
-        return renderPlaces(places);
+        renderPlaces(places);
     }
 
     if (method !== 'static') {
+
         // first get current user location
         return navigator.geolocation.getCurrentPosition(function (position) {
 
-            // than use it to load from remote APIs some places nearby
-            dynamicLoadPlaces(position.coords)
-                .then((places) => {
-                    renderPlaces(places);
-                })
-        },
+                // than use it to load from remote APIs some places nearby
+                dynamicLoadPlaces(position.coords)
+                    .then((places) => {
+                        renderPlaces(places);
+                    })
+            },
             (err) => console.error('Error in retrieving position', err),
             {
                 enableHighAccuracy: true,
@@ -34,10 +35,17 @@ function staticLoadPlaces() {
         {
             name: "Your place name",
             location: {
-                lat: 44.493271, // change here latitude if using static data
-                lng: 11.326040, // change here longitude if using static data
+                lat: 0, // change here latitude if using static data
+                lng: 0, // change here longitude if using static data
             }
         },
+        {
+            name: 'Another place name',
+            location: {
+                lat: 0,
+                lng: 0,
+            }
+        }
     ];
 }
 
@@ -45,8 +53,8 @@ function staticLoadPlaces() {
 function dynamicLoadPlaces(position) {
     let params = {
         radius: 300,    // search places not farther than this value (in meters)
-        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',
-        clientSecret: '',
+        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',   // add your credentials here
+        clientSecret: '',   // add your credentials here
         version: '20300101',    // foursquare versioning, required but unuseful for this demo
     };
 
@@ -77,20 +85,44 @@ function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
     places.forEach((place) => {
-        let latitude = place.location.lat;
-        let longitude = place.location.lng;
+        const latitude = place.location.lat;
+        const longitude = place.location.lng;
 
-        // add place name
-        let text = document.createElement('a-link');
-        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-        text.setAttribute('title', place.name);
-        text.setAttribute('href', 'http://www.example.com/');
-        text.setAttribute('scale', '15 15 15');
+        // add place icon
+        const icon = document.createElement('a-image');
+        icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
+        icon.setAttribute('name', place.name);
+        icon.setAttribute('src', '/assets/img/map-marker.png');
 
-        text.addEventListener('loaded', () => {
-            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-        });
+        // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
+        icon.setAttribute('scale', '20, 20');
 
-        scene.appendChild(text);
+        icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
+
+        const clickListener = function (ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            const name = ev.target.getAttribute('name');
+
+            const el = ev.detail.intersection && ev.detail.intersection.object.el;
+
+            if (el && el === ev.target) {
+                const label = document.createElement('span');
+                const container = document.createElement('div');
+                container.setAttribute('id', 'place-label');
+                label.innerText = name;
+                container.appendChild(label);
+                document.body.appendChild(container);
+
+                setTimeout(() => {
+                    container.parentElement.removeChild(container);
+                }, 1500);
+            }
+        };
+
+        icon.addEventListener('click', clickListener);
+
+        scene.appendChild(icon);
     });
 }
