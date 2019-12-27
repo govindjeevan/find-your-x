@@ -1,6 +1,10 @@
 class MarkersController < ApplicationController
   before_action :set_marker, only: [:show, :edit, :update, :destroy]
 
+  def experience
+
+  end
+
   # GET /markers
   # GET /markers.json
   def index

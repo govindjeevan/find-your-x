@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_26_050443) do
+ActiveRecord::Schema.define(version: 2019_12_26_080059) do
 
   create_table "markers", force: :cascade do |t|
     t.decimal "lat"
     t.decimal "lng"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "speaker"
   end
 
 end
