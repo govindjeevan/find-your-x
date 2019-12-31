@@ -1,14 +1,10 @@
 <script src='https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js'></script>
 <script src='/assets/js/aframe-ar.js'></script>
-</head>
 
 <link rel="stylesheet" href="/assets/css/location-based/index.css">
 
-<!-- Dynamically add places from Javascript -->
-<script src="/assets/js/places.js"></script>
-
 <a-scene
-  cursor='rayOrigin: mouse; fuse: true; fuseTimeout: 0;'
+  cursor='rayOrigin: mouse; fuse: false'
   raycaster="objects: [gps-entity-place];"
   vr-mode-ui="enabled: false"
   embedded
@@ -17,3 +13,11 @@
   <a-camera gps-camera rotation-reader>
   </a-camera>
 </a-scene>
+
+<form id="found_form" method="POST">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+</form>
+
+<!-- Dynamically add places from Javascript -->
+<script src="/assets/js/places.js"></script>

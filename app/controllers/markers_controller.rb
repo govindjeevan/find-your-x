@@ -1,7 +1,11 @@
 class MarkersController < ApplicationController
-  before_action :set_marker, only: [:show, :edit, :update, :destroy]
+  before_action :set_marker, only: [:found, :show, :edit, :update, :destroy]
 
-  def experience
+  def experience; end
+
+  def found
+    current_user.update("marker_#{@marker.id}": true)
+    redirect_to experience_markers_path, notice: 'You have found a marker!'
   end
 
   # GET /markers

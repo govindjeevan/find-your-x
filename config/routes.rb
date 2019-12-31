@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :markers do
     collection do
       get 'experience'
+    end
+    member do
+      post 'found'
     end
   end
 
