@@ -120,8 +120,6 @@ function renderPlaces(places) {
             ev.stopPropagation();
             ev.preventDefault();
 
-            const name = ev.target.getAttribute('name');
-
             const el = ev.detail.intersection && ev.detail.intersection.object.el;
 
             if (el && el === ev.target) {
@@ -132,17 +130,14 @@ function renderPlaces(places) {
                 // container.appendChild(label);
                 // document.body.appendChild(container);
                 //
-                const id = ev.target.getAttribute('id');
-                const url = "/markers/" + id + "/found";
-                //
                 // setTimeout(() => {
                 //     container.parentElement.removeChild(container);
                 // }, 1500);
 
+                const id = ev.target.getAttribute('id');
+                const url = "/markers/" + id + "/found";
+
                 const form = $("#found_form");
-
-                console.log(form.attr("action"));
-
                 form.attr('action', url);
                 form.append($('<input type="hidden" name="id" value="' + id + '">'));
                 form.submit();
@@ -151,6 +146,37 @@ function renderPlaces(places) {
 
         icon.addEventListener('click', clickListener);
 
-        scene.appendChild(icon);
+        const clickListener2 = function (ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            const el = ev.detail.intersection && ev.detail.intersection.object.el;
+
+            if (el && el === ev.target) {
+                const id = ev.target.getAttribute('id');
+                const url = "/markers/" + id + "/found";
+
+                const form = $("#found_form");
+                form.attr('action', url);
+                form.append($('<input type="hidden" name="id" value="' + id + '">'));
+                form.submit();
+            }
+        };
+
+        // add place name
+        let text = document.createElement('a-link');
+        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+        text.setAttribute('title', 'My x');
+        text.setAttribute('href', "/markers/" + place.id + "/found");
+        text.setAttribute('scale', '5 5 5');
+
+        text.addEventListener('loaded', () => {
+            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+        });
+
+        scene.appendChild(text);
+        //
+
+        // scene.appendChild(icon);
     });
 }
