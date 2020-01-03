@@ -12,6 +12,7 @@ window.onload = () => {
             var places = [];
             for (let i = 0; i < data.length; i++) {
                 var obj = {
+                    id: parseInt(data[i].id),
                     name: "Place name",
                     location: {
                         lat: parseFloat(data[i].lat),
@@ -51,23 +52,23 @@ function getPlaces(){
     });
 }
 
-function staticLoadPlaces() {
-    return [
-        {
-            name: "Your place name",
-            location: {
-                lat: 44.493271, // change here latitude if using static data
-                lng: 11.326040, // change here longitude if using static data
-            }
-        },
-    ];
-}
+// function staticLoadPlaces() {
+//     return [
+//         {
+//             name: "Your place name",
+//             location: {
+//                 lat: 44.493271, // change here latitude if using static data
+//                 lng: 11.326040, // change here longitude if using static data
+//             }
+//         },
+//     ];
+// }
 
 
 // getting places from REST APIs
 function dynamicLoadPlaces(position) {
     let params = {
-        radius: 300,    // search places not farther than this value (in meters)
+        radius: 1000,    // search places not farther than this value (in meters)
         clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',   // add your credentials here
         clientSecret: '',   // add your credentials here
         version: '20300101',    // foursquare versioning, required but unuseful for this demo
@@ -108,9 +109,10 @@ function renderPlaces(places) {
         icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
         icon.setAttribute('name', place.name);
         icon.setAttribute('src', '/assets/img/map-marker.png');
+        icon.setAttribute('id', place.id);
 
         // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
-        icon.setAttribute('scale', '10, 10');
+        icon.setAttribute('scale', '5, 5');
 
         icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
 
@@ -118,26 +120,63 @@ function renderPlaces(places) {
             ev.stopPropagation();
             ev.preventDefault();
 
-            const name = ev.target.getAttribute('name');
-
             const el = ev.detail.intersection && ev.detail.intersection.object.el;
 
             if (el && el === ev.target) {
-                const label = document.createElement('span');
-                const container = document.createElement('div');
-                container.setAttribute('id', 'place-label');
-                label.innerText = name;
-                container.appendChild(label);
-                document.body.appendChild(container);
+                // const label = document.createElement('span');
+                // const container = document.createElement('div');
+                // container.setAttribute('id', 'place-label');
+                // label.innerText = name;
+                // container.appendChild(label);
+                // document.body.appendChild(container);
+                //
+                // setTimeout(() => {
+                //     container.parentElement.removeChild(container);
+                // }, 1500);
 
-                setTimeout(() => {
-                    container.parentElement.removeChild(container);
-                }, 1500);
+                const id = ev.target.getAttribute('id');
+                const url = "/markers/" + id + "/found";
+
+                const form = $("#found_form");
+                form.attr('action', url);
+                form.append($('<input type="hidden" name="id" value="' + id + '">'));
+                form.submit();
             }
         };
 
         icon.addEventListener('click', clickListener);
 
-        scene.appendChild(icon);
+        const clickListener2 = function (ev) {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            const el = ev.detail.intersection && ev.detail.intersection.object.el;
+
+            if (el && el === ev.target) {
+                const id = ev.target.getAttribute('id');
+                const url = "/markers/" + id + "/found";
+
+                const form = $("#found_form");
+                form.attr('action', url);
+                form.append($('<input type="hidden" name="id" value="' + id + '">'));
+                form.submit();
+            }
+        };
+
+        // add place name
+        let text = document.createElement('a-link');
+        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+        text.setAttribute('title', 'My x');
+        text.setAttribute('href', "/markers/" + place.id + "/found");
+        text.setAttribute('scale', '5 5 5');
+
+        text.addEventListener('loaded', () => {
+            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+        });
+
+        scene.appendChild(text);
+        //
+
+        // scene.appendChild(icon);
     });
 }
