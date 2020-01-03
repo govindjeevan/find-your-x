@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get "play", :controller=>"markers", :action=>"experience"
+  get 'play', controller: 'markers', action: 'experience'
+  root 'markers#experience'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
