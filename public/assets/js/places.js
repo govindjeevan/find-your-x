@@ -1,56 +1,40 @@
 window.onload = () => {
-    let method = 'dynamic';
+    // let method = 'dynamic';
 
     // if you want to statically add places, de-comment following line
-    method = 'static';
+    let method = 'static';
+
+
 
     if (method === 'static') {
         // let places = staticLoadPlaces();
         // renderPlaces(places);
 
-        navigator.geolocation.getCurrentPosition(function (position) {
+        function logic(position){
+            console.log('called');
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
 
-                // than use it to load from remote APIs some places nearby
-
-                var lat = position.coords.latitude;
-                var lng = position.coords.longitude;
-
-                getPlaces(lat, lng).then(function(data) {
-                    let datal = data['locations'];
-                    var places = [];
-                    for (let i = 0; i < datal.length; i++) {
-                        var obj = {
-                            id: parseInt(datal[i].id),
-                            name: "Place name",
-                            location: {
-                                lat: parseFloat(datal[i].lat),
-                                lng: parseFloat(datal[i].lng)
-                            }
-                        };
-                        places.push(obj);
-                    }
-                    renderPlaces(places);
-                });
-
-                setInterval(function(){
-                    getPlaces(lat, lng).then(function(data) {
-                        let datal = data['locations'];
-                        var places = [];
-                        for (let i = 0; i < datal.length; i++) {
-                            var obj = {
-                                id: parseInt(datal[i].id),
-                                name: "Place name",
-                                location: {
-                                    lat: parseFloat(datal[i].lat),
-                                    lng: parseFloat(datal[i].lng)
-                                }
-                            };
-                            places.push(obj);
+            getPlaces(lat, lng).then(function (data) {
+                let datal = data['locations'];
+                var places = [];
+                for (let i = 0; i < datal.length; i++) {
+                    var obj = {
+                        id: parseInt(datal[i].id),
+                        name: "Place name",
+                        location: {
+                            lat: parseFloat(datal[i].lat),
+                            lng: parseFloat(datal[i].lng)
                         }
-                        renderPlaces(places);
-                    });
-                }, 15000);
-            },
+                    };
+                    places.push(obj);
+                }
+                renderPlaces(places);
+            });
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            logic,
             (err) => console.error('Error in retrieving position', err)
         );
     }
@@ -76,8 +60,8 @@ window.onload = () => {
     }
 };
 
-function getPlaces(lat, lng){
-    return $.getJSON("/markers/feed.json?lat=" + lat + "&lng=" + lng).then(function(data){
+function getPlaces(lat, lng) {
+    return $.getJSON("/markers/feed.json?lat=" + lat + "&lng=" + lng).then(function (data) {
         return data;
     });
 }
@@ -125,73 +109,46 @@ function dynamicLoadPlaces(position) {
         .catch((err) => {
             console.error('Error with places API', err);
         })
-};
+}
 
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
     var elements = document.getElementsByTagName('a-link');
+    console.log(elements.length);
     while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
 
     places.forEach((place) => {
-        const latitude = place.location.lat;
-        const longitude = place.location.lng;
-
-        // add place icon
-        const icon = document.createElement('a-image');
-        icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-        icon.setAttribute('name', place.name);
-        icon.setAttribute('src', '/assets/img/1.gif');
-        icon.setAttribute('id', place.id);
-
-        // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
-        icon.setAttribute('scale', '5, 5');
-
-        icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
-
-        const clickListener = function (ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
-
-            const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-            if (el && el === ev.target) {
-                // const label = document.createElement('span');
-                // const container = document.createElement('div');
-                // container.setAttribute('id', 'place-label');
-                // label.innerText = name;
-                // container.appendChild(label);
-                // document.body.appendChild(container);
-                //
-                // setTimeout(() => {
-                //     container.parentElement.removeChild(container);
-                // }, 1500);
-
-                const id = ev.target.getAttribute('id');
-                const url = "/markers/" + id + "/found";
-
-                const form = $("#found_form");
-                form.attr('action', url);
-                form.append($('<input type="hidden" name="id" value="' + id + '">'));
-                form.submit();
-            }
-        };
-
-        icon.addEventListener('click', clickListener);
 
 
-        // add place name
-        let text = document.createElement('a-link');
-        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-        text.setAttribute('title', 'My x');
-        text.setAttribute('href', "/markers/" + place.id + "/found");
-        text.setAttribute('scale', '5 5 5');
-
-        text.addEventListener('loaded', () => {
-            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+        $("a-link").each(function() {
+            $(this).attr("visible", false);
         });
 
-        scene.appendChild(text);
+        var myEle = $("#" + place.id);
+        if(myEle.length){
+            myEle.attr("visible", true);
+        }
+        else {
+            let text = document.createElement('a-link');
+
+            const latitude = place.location.lat;
+            const longitude = place.location.lng;
+
+            text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+            text.setAttribute('id', place.id);
+            text.setAttribute('title', 'My x');
+            text.setAttribute('href', "/markers/" + place.id + "/found");
+            text.setAttribute('scale', '5 5 5');
+            text.setAttribute('visible', 'true');
+            text.addEventListener('loaded', () => {
+                window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+            });
+
+            scene.appendChild(text);
+        }
+
+
         //
 
         // scene.appendChild(icon);

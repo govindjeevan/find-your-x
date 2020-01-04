@@ -11,8 +11,13 @@ class Marker < ApplicationRecord
   end
 
   def self.feed(c_lat, c_lng)
-    limit = 0.02
-    Marker.select { |m| m.distance(c_lat, c_lng) < limit }
+    if c_lat == -1 && c_lng == -1
+      Marker.all
+    else
+      limit = 0.2
+      Marker.select { |m| m.distance(c_lat, c_lng) < limit }
+    end
+
   end
 
   def colour
