@@ -12,7 +12,7 @@ class Marker < ApplicationRecord
   end
 
   def self.feed(c_lat, c_lng)
-    if c_lat == -1 && c_lng.to_i == -1
+    if c_lat == -1.0 && c_lng.to_i == -1.0
       Marker.all
     else
       limit = 0.2

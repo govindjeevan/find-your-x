@@ -27,14 +27,9 @@ window.onload = () => {
         logic,
         (err) => console.error('Error in retrieving position', err)
     );
-    //
-    setInterval(function () {
-        navigator.geolocation.getCurrentPosition(
-            logic,
-            (err) => console.error('Error in retrieving position', err)
-        );
-    }, 5000);
 };
+
+function
 
 function getPlaces(lat, lng) {
     return $.getJSON("/markers/feed.json?lat=" + -1 + "&lng=" + -1).then(function (data) {

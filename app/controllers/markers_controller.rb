@@ -4,7 +4,7 @@ class MarkersController < ApplicationController
   before_action :set_marker, only: [:found, :show, :edit, :update, :destroy]
 
   def feed
-    @markers = Marker.feed(params[:lat].to_i, params[:lng].to_i)
+    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f)
   end
 
   def experience; end
