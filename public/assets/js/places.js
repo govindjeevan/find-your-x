@@ -1,135 +1,62 @@
 window.onload = () => {
-    // let method = 'dynamic';
+    function logic(position) {
 
-    // if you want to statically add places, de-comment following line
-    let method = 'static';
+        console.log('interval');
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
 
+        getPlaces(lat, lng).then(function (data) {
+            let datal = data['locations'];
+            var places = [];
+            for (let i = 0; i < datal.length; i++) {
+                var obj = {
+                    id: parseInt(datal[i].id),
+                    name: "Place name",
+                    location: {
+                        lat: parseFloat(datal[i].lat),
+                        lng: parseFloat(datal[i].lng)
+                    }
+                };
+                places.push(obj);
+            }
+            renderPlaces(places);
+        });
+    }
 
-
-    if (method === 'static') {
-        // let places = staticLoadPlaces();
-        // renderPlaces(places);
-
-        function logic(position){
-            console.log('called');
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-
-            getPlaces(lat, lng).then(function (data) {
-                let datal = data['locations'];
-                var places = [];
-                for (let i = 0; i < datal.length; i++) {
-                    var obj = {
-                        id: parseInt(datal[i].id),
-                        name: "Place name",
-                        location: {
-                            lat: parseFloat(datal[i].lat),
-                            lng: parseFloat(datal[i].lng)
-                        }
-                    };
-                    places.push(obj);
-                }
-                renderPlaces(places);
-            });
-        }
-
+    navigator.geolocation.getCurrentPosition(
+        logic,
+        (err) => console.error('Error in retrieving position', err)
+    );
+    //
+    setInterval(function () {
         navigator.geolocation.getCurrentPosition(
             logic,
             (err) => console.error('Error in retrieving position', err)
         );
-    }
-
-    if (method !== 'static') {
-
-        // first get current user location
-        return navigator.geolocation.getCurrentPosition(function (position) {
-
-                // than use it to load from remote APIs some places nearby
-                dynamicLoadPlaces(position.coords)
-                    .then((places) => {
-                        renderPlaces(places);
-                    })
-            },
-            (err) => console.error('Error in retrieving position', err),
-            {
-                enableHighAccuracy: true,
-                maximumAge: 0,
-                timeout: 27000,
-            }
-        );
-    }
+    }, 5000);
 };
 
 function getPlaces(lat, lng) {
-    return $.getJSON("/markers/feed.json?lat=" + lat + "&lng=" + lng).then(function (data) {
+    return $.getJSON("/markers/feed.json?lat=" + -1 + "&lng=" + -1).then(function (data) {
         return data;
     });
-}
-
-// function staticLoadPlaces() {
-//     return [
-//         {
-//             name: "Your place name",
-//             location: {
-//                 lat: 44.493271, // change here latitude if using static data
-//                 lng: 11.326040, // change here longitude if using static data
-//             }
-//         },
-//     ];
-// }
-
-
-// getting places from REST APIs
-function dynamicLoadPlaces(position) {
-    let params = {
-        radius: 1000,    // search places not farther than this value (in meters)
-        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',   // add your credentials here
-        clientSecret: '',   // add your credentials here
-        version: '20300101',    // foursquare versioning, required but unuseful for this demo
-    };
-
-    // CORS Proxy to avoid CORS problems
-    let corsProxy = 'https://cors-anywhere.herokuapp.com/';
-
-    // Foursquare API
-    let endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
-        &ll=${position.latitude},${position.longitude}
-        &radius=${params.radius}
-        &client_id=${params.clientId}
-        &client_secret=${params.clientSecret}
-        &limit=15
-        &v=${params.version}`;
-    return fetch(endpoint)
-        .then((res) => {
-            return res.json()
-                .then((resp) => {
-                    return resp.response.venues;
-                })
-        })
-        .catch((err) => {
-            console.error('Error with places API', err);
-        })
 }
 
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
-    var elements = document.getElementsByTagName('a-link');
-    console.log(elements.length);
-    while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
+    console.log($("a-link").length);
+
+    $("a-link").each(function () {
+        $(this).attr("visible", false);
+    });
 
     places.forEach((place) => {
 
-
-        $("a-link").each(function() {
-            $(this).attr("visible", false);
-        });
-
         var myEle = $("#" + place.id);
-        if(myEle.length){
+        if (myEle.length) {
             myEle.attr("visible", true);
-        }
-        else {
+        } else {
             let text = document.createElement('a-link');
 
             const latitude = place.location.lat;
@@ -147,10 +74,5 @@ function renderPlaces(places) {
 
             scene.appendChild(text);
         }
-
-
-        //
-
-        // scene.appendChild(icon);
     });
 }

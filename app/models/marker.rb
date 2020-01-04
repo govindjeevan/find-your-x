@@ -7,6 +7,7 @@ class Marker < ApplicationRecord
   def distance(c_lat, c_lng)
     cur_loc = Geokit::LatLng.new(c_lat, c_lng)
     destination = lat.to_s + ',' + lng.to_s
+    puts cur_loc.distance_to(destination)
     cur_loc.distance_to(destination)
   end
 
