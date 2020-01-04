@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :speakers
   devise_for :users
   resources :markers do
     collection do

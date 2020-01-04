@@ -16,6 +16,10 @@ class MarkersController < ApplicationController
     @markers = Marker.all
   end
 
+  def speakers
+    @speakers = Speaker.all
+  end
+
   # GET /markers/1
   # GET /markers/1.json
   def show
