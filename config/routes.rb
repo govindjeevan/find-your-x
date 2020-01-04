@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       get 'experience'
     end
     member do
-      post 'found'
+      get 'found'
     end
   end
 

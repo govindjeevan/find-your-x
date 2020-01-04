@@ -146,22 +146,6 @@ function renderPlaces(places) {
 
         icon.addEventListener('click', clickListener);
 
-        const clickListener2 = function (ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
-
-            const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-            if (el && el === ev.target) {
-                const id = ev.target.getAttribute('id');
-                const url = "/markers/" + id + "/found";
-
-                const form = $("#found_form");
-                form.attr('action', url);
-                form.append($('<input type="hidden" name="id" value="' + id + '">'));
-                form.submit();
-            }
-        };
 
         // add place name
         let text = document.createElement('a-link');
