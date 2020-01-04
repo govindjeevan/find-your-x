@@ -34,7 +34,6 @@ window.onload = () => {
 
                 setInterval(function(){
                     getPlaces(lat, lng).then(function(data) {
-                        alert('test');
                         let datal = data['locations'];
                         var places = [];
                         for (let i = 0; i < datal.length; i++) {
@@ -50,7 +49,7 @@ window.onload = () => {
                         }
                         renderPlaces(places);
                     });
-                }, 3000);
+                }, 120000);
             },
             (err) => console.error('Error in retrieving position', err)
         );
