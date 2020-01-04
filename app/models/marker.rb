@@ -11,11 +11,10 @@ class Marker < ApplicationRecord
     cur_loc.distance_to(destination)
   end
 
-  def self.feed(c_lat, c_lng)
+  def self.feed(c_lat, c_lng, limit)
     if c_lat == -1.0 && c_lng.to_i == -1.0
       Marker.all
     else
-      limit = 0.2
       Marker.select { |m| m.distance(c_lat, c_lng) < limit }
     end
 

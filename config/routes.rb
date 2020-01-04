@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       get 'experience'
       get 'feed'
+      get 'feed_webapp'
     end
     member do
       get 'found'

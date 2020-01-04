@@ -3,11 +3,18 @@ class MarkersController < ApplicationController
   before_action :authenticate_user!, except: [:feed]
   before_action :set_marker, only: [:found, :show, :edit, :update, :destroy]
 
+  layout 'layouts/aframe'
+
   def feed
-    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f)
+    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f, 0.02)
   end
 
-  def experience; end
+  def feed_webapp
+    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f, 0.1)
+  end
+
+  def experience
+  end
 
   def found
     current_user.update("marker_#{@marker.id}": true)

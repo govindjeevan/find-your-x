@@ -1,22 +1,56 @@
-<script src='https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js'></script>
-<script src='/assets/js/aframe-ar.js'></script>
+<style>
+  #Button {
+    display: inline-block;
+    padding: 0.5em 1.5em;
+    margin: 0.1em 0.1em 0.1em 0;
+    border: 0.16em solid rgba(255, 255, 255, 0);
+    border-radius: 2em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #FFFFFF;
+    background: #F14E4E;
+    font-size: 1.5em;
+    text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+    text-align: center;
+    transition: all 0.2s;
+  }
 
-<link rel="stylesheet" href="/assets/css/location-based/index.css">
+  #Button:disabled {
+    background: #F1A19A;
+  }
+
+  #Button:hover {
+    border-color: rgba(255, 255, 255, 1);
+  }
+</style>
+
+
+
+<a-scene
+  cursor='fuse: false'
+  vr-mode-ui="enabled: false" embedded
+  arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+
+  <a-assets>
+    <img id="tex1" src="/assets/img/2.gif">
+  </a-assets>
+
+<!--  <a-entity geometry="primitive:box;" material="shader:gif;src:localhost:3000/assets/img/2.gif;color:green;opacity:.8"></a-entity>-->
+
+
+  <a-camera gps-camera rotation-reader>
+  </a-camera>
+  <div style="position: relative; top: 10px; text-align: center; z-index: 1;">
+    <button id="Button" onclick="refresh()">
+      Please wait...
+    </button>
+  </div>
+</a-scene>
+
+
 
 <!-- Dynamically add places from Javascript -->
 <script src="/assets/js/places.js"></script>
 
-
-<a-scene
-
-  cursor='fuse: false'
-  vr-mode-ui="enabled: false" embedded
-         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-
-  <a-camera gps-camera rotation-reader>
-  </a-camera>
-</a-scene>
-<form id="found_form" method="POST">
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-
-</form>
