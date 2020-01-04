@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :markers do
     collection do
       get 'experience'
+      get 'feed'
     end
     member do
       get 'found'

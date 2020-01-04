@@ -1,7 +1,19 @@
 class Marker < ApplicationRecord
+  require 'geokit'
   acts_as_mappable :default_units => :kms,
                    :default_formula => :sphere,
                    :distance_field_name => :distance
+
+  def distance(c_lat, c_lng)
+    cur_loc = Geokit::LatLng.new(c_lat, c_lng)
+    destination = lat.to_s + ',' + lng.to_s
+    cur_loc.distance_to(destination)
+  end
+
+  def self.feed(c_lat, c_lng)
+    limit = 0.02
+    Marker.select { |m| m.distance(c_lat, c_lng) < limit }
+  end
 
   def colour
     case self.speaker.to_i

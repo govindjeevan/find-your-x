@@ -8,22 +8,52 @@ window.onload = () => {
         // let places = staticLoadPlaces();
         // renderPlaces(places);
 
-        getPlaces().then(function(data) {
-            let datal = data['locations'];
-            var places = [];
-            for (let i = 0; i < datal.length; i++) {
-                var obj = {
-                    id: parseInt(datal[i].id),
-                    name: "Place name",
-                    location: {
-                        lat: parseFloat(datal[i].lat),
-                        lng: parseFloat(datal[i].lng)
+        navigator.geolocation.getCurrentPosition(function (position) {
+
+                // than use it to load from remote APIs some places nearby
+
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+
+                getPlaces(lat, lng).then(function(data) {
+                    let datal = data['locations'];
+                    var places = [];
+                    for (let i = 0; i < datal.length; i++) {
+                        var obj = {
+                            id: parseInt(datal[i].id),
+                            name: "Place name",
+                            location: {
+                                lat: parseFloat(datal[i].lat),
+                                lng: parseFloat(datal[i].lng)
+                            }
+                        };
+                        places.push(obj);
                     }
-                };
-                places.push(obj);
-            }
-            renderPlaces(places);
-        });
+                    renderPlaces(places);
+                });
+
+                setInterval(function(){
+                    getPlaces(lat, lng).then(function(data) {
+                        alert('test');
+                        let datal = data['locations'];
+                        var places = [];
+                        for (let i = 0; i < datal.length; i++) {
+                            var obj = {
+                                id: parseInt(datal[i].id),
+                                name: "Place name",
+                                location: {
+                                    lat: parseFloat(datal[i].lat),
+                                    lng: parseFloat(datal[i].lng)
+                                }
+                            };
+                            places.push(obj);
+                        }
+                        renderPlaces(places);
+                    });
+                }, 3000);
+            },
+            (err) => console.error('Error in retrieving position', err)
+        );
     }
 
     if (method !== 'static') {
@@ -47,8 +77,8 @@ window.onload = () => {
     }
 };
 
-function getPlaces(){
-    return $.getJSON("/markers.json").then(function(data){
+function getPlaces(lat, lng){
+    return $.getJSON("/markers/feed.json?lat=" + lat + "&lng=" + lng).then(function(data){
         return data;
     });
 }
@@ -100,6 +130,9 @@ function dynamicLoadPlaces(position) {
 
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
+
+    var elements = document.getElementsByTagName('a-link');
+    while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
 
     places.forEach((place) => {
         const latitude = place.location.lat;
