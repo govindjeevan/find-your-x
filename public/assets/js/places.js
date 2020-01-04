@@ -9,14 +9,15 @@ window.onload = () => {
         // renderPlaces(places);
 
         getPlaces().then(function(data) {
+            let datal = data['locations'];
             var places = [];
-            for (let i = 0; i < data.length; i++) {
+            for (let i = 0; i < datal.length; i++) {
                 var obj = {
-                    id: parseInt(data[i].id),
+                    id: parseInt(datal[i].id),
                     name: "Place name",
                     location: {
-                        lat: parseFloat(data[i].lat),
-                        lng: parseFloat(data[i].lng)
+                        lat: parseFloat(datal[i].lat),
+                        lng: parseFloat(datal[i].lng)
                     }
                 };
                 places.push(obj);
