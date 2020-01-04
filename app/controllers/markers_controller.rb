@@ -1,7 +1,11 @@
 class MarkersController < ApplicationController
-  protect_from_forgery except: [:index]
-  before_action :authenticate_user!, except: [:index]
+  protect_from_forgery except: [:feed]
+  before_action :authenticate_user!, except: [:feed]
   before_action :set_marker, only: [:found, :show, :edit, :update, :destroy]
+
+  def feed
+    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f)
+  end
 
   def experience; end
 
