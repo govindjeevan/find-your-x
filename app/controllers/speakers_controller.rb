@@ -1,4 +1,6 @@
 class SpeakersController < ApplicationController
+  protect_from_forgery except: [:index]
+  before_action :authenticate_user!, except: [:index]
   before_action :set_speaker, only: [:show, :edit, :update, :destroy]
 
   # GET /speakers
