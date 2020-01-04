@@ -49,7 +49,7 @@ window.onload = () => {
                         }
                         renderPlaces(places);
                     });
-                }, 120000);
+                }, 15000);
             },
             (err) => console.error('Error in retrieving position', err)
         );
