@@ -1,1 +1,1 @@
-json.speakers @markers
+json.speakers @speakers
