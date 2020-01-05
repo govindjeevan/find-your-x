@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_04_052404) do
+ActiveRecord::Schema.define(version: 2020_01_04_104433) do
 
   create_table "markers", force: :cascade do |t|
     t.decimal "lat"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2020_01_04_052404) do
     t.boolean "marker_8", default: false
     t.boolean "marker_9", default: false
     t.boolean "marker_10", default: false
+    t.boolean "marker_11", default: false
+    t.boolean "marker_12", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -10,32 +10,31 @@ function refresh(){
 
         document.getElementById("Button").innerHTML = "Refresh X's around you";
     },5000);
+
     navigator.geolocation.getCurrentPosition(function (position) {
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
 
         getPlaces(lat, lng).then(function (data) {
-            let data_locations = data['locations'];
             var places = [];
-            for (let i = 0; i < data_locations.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 var obj = {
-                    id: parseInt(data_locations[i].id),
-                    name: "Place name",
+                    id: parseInt(data[i].speaker_id),
+                    name: data[i].speaker_title,
                     location: {
-                        lat: parseFloat(data_locations[i].lat),
-                        lng: parseFloat(data_locations[i].lng)
+                        lat: parseFloat(data[i].lat),
+                        lng: parseFloat(data[i].lng)
                     }
                 };
                 places.push(obj);
             }
             renderPlaces(places);
         });
-        }
-    );
+    });
 }
 
 function getPlaces(lat, lng) {
-    return $.getJSON("/markers/feed_webapp.json?lat=" + -1 + "&lng=" + -1).then(function (data) {
+    return $.getJSON("/markers/feed_webapp.json?lat=" + lat + "&lng=" + lng).then(function (data) {
         return data;
     });
 }
@@ -43,7 +42,7 @@ function getPlaces(lat, lng) {
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
-    $("a-link").each(function () {
+    $("a-entity").each(function () {
         $(this).attr("visible", false);
     });
 
@@ -64,8 +63,8 @@ function renderPlaces(places) {
             entity.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
             entity.setAttribute('data-id',  place.id);
             var url = "/markers/" + place.id + "/found";
-            entity.setAttribute('href', url);
-            entity.setAttribute('scale','20 20 20');
+            entity.setAttribute('link-href', url);
+            entity.setAttribute('scale','10 10 10');
 
 
             let image = document.createElement('a-image');

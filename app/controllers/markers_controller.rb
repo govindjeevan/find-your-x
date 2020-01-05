@@ -2,8 +2,7 @@ class MarkersController < ApplicationController
   protect_from_forgery except: [:feed]
   before_action :authenticate_user!, except: [:feed]
   before_action :set_marker, only: [:found, :show, :edit, :update, :destroy]
-
-  layout 'layouts/aframe'
+  layout :resolve_layout
 
   def feed
     @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f, 0.02)
@@ -14,11 +13,13 @@ class MarkersController < ApplicationController
   end
 
   def experience
+    #layout 'layouts/aframe'
+
   end
 
   def found
     current_user.update("marker_#{@marker.id}": true)
-    redirect_to experience_markers_path, notice: 'You have found an X!'
+    redirect_to speaker_path(@marker.speaker), notice: 'You have found an X!'
   end
 
   # GET /markers
@@ -95,4 +96,13 @@ class MarkersController < ApplicationController
     def marker_params
       params.require(:marker).permit(:lat, :lng, :speaker)
     end
+
+  def resolve_layout
+    case action_name
+    when "experience"
+      "aframe"
+    else
+      "application"
+    end
+  end
 end
