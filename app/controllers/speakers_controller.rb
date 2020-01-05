@@ -2,6 +2,8 @@ class SpeakersController < ApplicationController
   protect_from_forgery except: [:index]
   before_action :authenticate_user!, except: [:index]
   before_action :set_speaker, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin_access, except: [:show]
+  before_action :check_show_access, only: [:show]
 
   # GET /speakers
   # GET /speakers.json
@@ -73,5 +75,17 @@ class SpeakersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def speaker_params
     params.require(:speaker).permit(:name, :title, :desc)
+  end
+
+  def check_show_access
+    return if current_user["marker_#{@speaker.id}"] == true
+
+    redirect_back(fallback_location: :root, alert: 'You are not allowed to access this page.')
+  end
+
+  def check_admin_access
+    return if current_user.admin?
+
+    redirect_back(fallback_location: :root, alert: 'You are not allowed to access this page.')
   end
 end

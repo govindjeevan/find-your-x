@@ -1,7 +1,8 @@
 class MarkersController < ApplicationController
   protect_from_forgery except: [:feed]
   before_action :authenticate_user!, except: [:feed]
-  before_action :set_marker, only: [:found, :show, :edit, :update, :destroy]
+  before_action :set_marker, only: %i[found show edit update destroy]
+  before_action :check_admin_access, except: %i[experience feed feed_webapp found]
   layout :resolve_layout
 
   def feed
@@ -96,6 +97,12 @@ class MarkersController < ApplicationController
     params.require(:marker).permit(:lat, :lng, :speaker)
   end
 
+  def check_admin_access
+    return if current_user.admin?
+
+    redirect_back(fallback_location: :root, alert: 'You are not allowed to access this page.')
+  end
+
   def resolve_layout
     case action_name
     when "experience"
@@ -104,4 +111,6 @@ class MarkersController < ApplicationController
       "application"
     end
   end
+
+
 end
