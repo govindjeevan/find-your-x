@@ -4,9 +4,9 @@
       <h2><%= pluralize(speaker.errors.count, "error") %> prohibited this speaker from being saved:</h2>
 
       <ul>
-      <% speaker.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% speaker.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

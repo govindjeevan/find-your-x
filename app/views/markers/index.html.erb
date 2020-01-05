@@ -24,16 +24,16 @@
         var marker, i;
         <% @markers.each do |m| %>
 
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(<%=m.lat %>, <%=m.lng %>),
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    strokeColor: "<%=m.colour %>",
-                    scale: 3
-                },
-                title: "<%=m.speaker %>",
-                map: map
-            });
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(<%=m.lat %>, <%=m.lng %>),
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                strokeColor: "<%=m.colour %>",
+                scale: 3
+            },
+            title: "<%=m.speaker %>",
+            map: map
+        });
 
         <%end %>
     }

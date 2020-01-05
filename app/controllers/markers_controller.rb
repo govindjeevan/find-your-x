@@ -13,8 +13,6 @@ class MarkersController < ApplicationController
   end
 
   def experience
-    #layout 'layouts/aframe'
-
   end
 
   def found
@@ -87,15 +85,16 @@ class MarkersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_marker
-      @marker = Marker.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def marker_params
-      params.require(:marker).permit(:lat, :lng, :speaker)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_marker
+    @marker = Marker.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def marker_params
+    params.require(:marker).permit(:lat, :lng, :speaker)
+  end
 
   def resolve_layout
     case action_name
