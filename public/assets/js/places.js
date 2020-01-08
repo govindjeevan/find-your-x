@@ -42,7 +42,7 @@ function getPlaces(lat, lng) {
 function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
-    $("a-entity").each(function () {
+    $("a-link").each(function () {
         $(this).attr("visible", false);
     });
 
@@ -57,36 +57,42 @@ function renderPlaces(places) {
 
         // <a-entity geometry="primitive:box;" material="shader:gif;src:url(nyancat.gif);color:green;opacity:.8"></a-entity>
 
-            let entity = document.createElement('a-entity');
-            entity.setAttribute('geometry', 'primitive:box');
-            entity.setAttribute('material','shader: gif; src:url(/assets/img/2.gif);color:white');
-            entity.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-            entity.setAttribute('data-id',  place.id);
-            var url = "/markers/" + place.id + "/found";
-            entity.setAttribute('link-href', url);
-            entity.setAttribute('scale','10 10 10');
-
-
-            let image = document.createElement('a-image');
-            image.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-            image.setAttribute('src', '#tex1');
-            image.setAttribute('scale','10 10 10');
+            // let entity = document.createElement('a-entity');
+            // entity.setAttribute('geometry', 'primitive:box');
+            // entity.setAttribute('material','shader: gif; src:url(/assets/img/2.gif);color:white');
+            // entity.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+            // entity.setAttribute('data-id',  place.id);
+            // var url = "/markers/" + place.id + "/found";
+            // entity.setAttribute('link-href', url);
+            // entity.setAttribute('scale','10 10 10');
+            //
+            //
+            // let image = document.createElement('a-image');
+            // image.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+            // image.setAttribute('src', '#tex1');
+            // image.setAttribute('scale','10 10 10');
 
             // scene.appendChild(image);
+
+
+            var url = "/markers/" + place.id + "/found";
+
 
             let text = document.createElement('a-link');
             text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
             text.setAttribute('id', place.id);
+            // text.setAttribute('title', place.name);
+
             text.setAttribute('title', place.name);
-            text.setAttribute('href', "/markers/" + place.id + "/found");
+            text.setAttribute('href', url);
             text.setAttribute('scale', '5 5 5');
             text.setAttribute('visible', 'true');
             text.addEventListener('loaded', () => {
                 window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
             });
 
-            // scene.appendChild(text);
-            scene.appendChild(entity);
+            scene.appendChild(text);
+            // scene.appendChild(entity);
         }
     });
 }
