@@ -63,28 +63,15 @@ function renderPlaces(places) {
             // entity.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
             // entity.setAttribute('data-id',  place.id);
             // var url = "/markers/" + place.id + "/found";
-            // entity.setAttribute('link-href', url);
+            // entity.setAttribute('link', 'href:' + url + '; title: test; image: #tex1');
             // entity.setAttribute('scale','10 10 10');
-            //
-            //
-            // let image = document.createElement('a-image');
-            // image.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-            // image.setAttribute('src', '#tex1');
-            // image.setAttribute('scale','10 10 10');
-
-            // scene.appendChild(image);
-
-
-            var url = "/markers/" + place.id + "/found";
-
+            // scene.appendChild(entity);
 
             let text = document.createElement('a-link');
             text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
             text.setAttribute('id', place.id);
-            // text.setAttribute('title', place.name);
-
             text.setAttribute('title', place.name);
-            text.setAttribute('href', url);
+            text.setAttribute('href', "/markers/" + place.id + "/found");
             text.setAttribute('scale', '5 5 5');
             text.setAttribute('visible', 'true');
             text.addEventListener('loaded', () => {
@@ -92,7 +79,7 @@ function renderPlaces(places) {
             });
 
             scene.appendChild(text);
-            // scene.appendChild(entity);
+
         }
     });
 }
