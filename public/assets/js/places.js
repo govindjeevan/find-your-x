@@ -19,7 +19,7 @@ function refresh(){
             var places = [];
             for (let i = 0; i < data.length; i++) {
                 var obj = {
-                    id: parseInt(data[i].speaker_id),
+                    id: parseInt(data[i].id),
                     name: data[i].speaker_title,
                     location: {
                         lat: parseFloat(data[i].lat),
