@@ -1,4 +1,8 @@
 <style>
+
+  #header-nav {
+    display: none;
+  }
   .card {
     width: 100%;
   }
@@ -30,36 +34,32 @@
 
 </style>
 
+<link rel="stylesheet" href="/assets/css/recipe_card.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div class="d-flex justify-content-center">
-  <div class="card text-center" style="width: 40rem;">
-    <img src="/assets/img/map-marker.png" class="card-img-top mt-3" alt="<%= @speaker.name %>">
-    <div class="card-body">
-      <h1 class="card-title"><%= @speaker.name %></h1>
-      <h3 class="card-text"><%= @speaker.title %></h3>
-      <h4 class="card-text"><%= @speaker.desc %></h4>
-      <a href="#" class="btn btn-lg btn-primary">Go somewhere</a>
-    </div>
+
+<div class="ft-recipe">
+  <div class="ft-recipe__thumb">
+    <img width="500px" height="500px" src="/assets/<%= @speaker.id %>.png" alt="Strawberry Waffle"/>
+  </div>
+  <div class="ft-recipe__content">
+    <header class="content__header">
+      <div class="row-wrapper">
+        <h1 class="recipe-title text-center">You have found</h1>
+        <h1 class="recipe-title text-center"><%= @speaker.name %>!!</h1>
+      </div>
+    </header>
+    <p class="description text-center">
+      <%= @speaker.desc %>
+    </p>
   </div>
 </div>
 
-
-<!--<div class="card">-->
-<!--  <div class="card-body text-center">-->
-
-<!--    <img src="/assets/img/map-marker.png">-->
-
-<!--    <h3>-->
-<%#= @speaker.name %>
-<!--    </h3>-->
-
-<!--    <h5>-->
-
-<!--    </h5>-->
-
-<!--    <p>-->
-
-<!--    </p>-->
-<!--  </div>-->
-<!--</div>-->
+<div class="text-center" style="color: white; position: absolute; bottom: 0px; left: 0px">
+ <h1><strong> TEDxNITKSurathkal | 17xJan </strong></h1>
+<h2 style="padding: 10px">Share a screenshot on Instagram and tag @tedxnitksurathkal to win prizes</h2>
+<div style="background-color: #272829; height: 120px; margin-top: 80px;box-shadow:0px -7px 21px 22px rgba(0,0,0,0.44); padding: 20px">
+  <h1 style="float: left"><i aria-hidden="true" class="fa fa-lg fa-arrow-left" style="margin-right: 20px"> </i>Find More</h1>
+  <h1 style="float: right">See Your <i aria-hidden="true" class="fa fa-lg fa-times" style="color: red"></i>'s</h1>
+</div>
+</div>

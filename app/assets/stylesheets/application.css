@@ -13,27 +13,5 @@
  *= require_tree .
  *= require_self
  */
-head, body, p, a, th, td, span, strong {
-    font-size: 105%;
-}
-
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #343A40;
-    color: white;
-    text-align: center;
-    z-index: 100;
-    padding: 15px 0px;
-}
 
 
-html, body {
-    background-color: #f4f4f4;
-}
-
-table {
-    background-color: #ffffff;
-}

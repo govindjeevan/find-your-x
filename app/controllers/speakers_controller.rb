@@ -78,7 +78,7 @@ class SpeakersController < ApplicationController
   end
 
   def check_show_access
-    return if current_user["marker_#{@speaker.id}"] == true
+    return if (current_user["marker_#{@speaker.id}"] == true) or current_user.admin?
 
     redirect_back(fallback_location: :root, alert: 'You are not allowed to access this page.')
   end

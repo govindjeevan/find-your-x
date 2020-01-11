@@ -50,7 +50,7 @@ function renderPlaces(places) {
 
         var myEle = $("#" + place.id);
         if (myEle.length) {
-            myEle.attr("visible", true);
+            myEle.attr("visible", 'true');
         } else {
             const latitude = place.location.lat;
             const longitude = place.location.lng;
