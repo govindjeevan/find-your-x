@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_11_085013) do
+ActiveRecord::Schema.define(version: 2020_01_11_165701) do
 
-  create_table "markers", force: :cascade do |t|
-    t.decimal "lat"
-    t.decimal "lng"
+  create_table "markers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.decimal "lat", precision: 10
+    t.decimal "lng", precision: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "speaker"
   end
 
-  create_table "speakers", force: :cascade do |t|
+  create_table "speakers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "title"
     t.text "desc"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2020_01_11_085013) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
