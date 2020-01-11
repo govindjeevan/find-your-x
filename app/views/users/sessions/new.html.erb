@@ -15,19 +15,22 @@
       <img src="/assets/img/logo-black.png" id="icon" alt="User Icon"/>
     </div>
 
+    <h1 class="fadeIn second" style="padding: 50px">Sign In</h1>
+
     <!-- Login Form -->
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn second" %>
+      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn third" %>
 
-      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password", class: "fadeIn third" %>
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password", class: "fadeIn fourth" %>
 
-      <div class="field fadeIn fourth" style="padding: 20px">
+      <div class="field fadeIn fifth" style="padding: 20px">
       <%= f.label "Remember me?" %>
       <%= f.check_box :remember_me, class: "form-control" %>
       </div>
 
-      <div class="actions fadeIn fifth">
+      <div class="actions fadeIn sixth mt-4">
         <%= f.submit "Sign in", class: "" %>
       </div>
     <% end %>

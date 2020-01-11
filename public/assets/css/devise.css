@@ -37,7 +37,7 @@ h2 {
     width: 100%;
     min-height: 100%;
     /*margin-right: 0px;*/
-    padding: 50% 20px 20px;
+    padding: 40% 20px 20px;
 }
 
 #formContent {
@@ -236,6 +236,12 @@ input[type=text]::placeholder {
     -webkit-animation-delay: 1.4s;
     -moz-animation-delay: 1.4s;
     animation-delay: 1.4s;
+}
+
+.fadeIn.seventh {
+    -webkit-animation-delay: 1.6s;
+    -moz-animation-delay: 1.6s;
+    animation-delay: 1.6s;
 }
 
 /* Simple CSS3 Fade-in Animation */

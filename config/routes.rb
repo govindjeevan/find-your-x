@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   resources :speakers
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    passwords: 'users/passwords'
   }
-
 
   resources :markers do
     collection do

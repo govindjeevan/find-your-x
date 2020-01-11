@@ -15,11 +15,13 @@
       <img src="/assets/img/logo-black.png" id="icon" alt="User Icon"/>
     </div>
 
+    <h1 class="fadeIn second" style="padding: 50px">Edit Account Details</h1>
+
     <!-- Login Form -->
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
       <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn second" %>
-
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
@@ -31,7 +33,7 @@
 
       <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Current Password (to confirm changes)", class: "fadeIn fourth" %>
 
-      <div class="actions fadeIn sixth">
+      <div class="actions fadeIn sixth mt-4">
         <%= f.submit "Update", class: "" %>
       </div>
     <% end %>
