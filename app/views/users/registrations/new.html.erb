@@ -1,0 +1,42 @@
+<style>
+  #header-nav {
+    display: none;
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="/assets/css/devise.css">
+
+<div class="wrapper fadeInDown" style="width: 100vw; padding-left: 60px; padding-right: 60px">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/img/logo-black.png" id="icon" alt="User Icon"/>
+    </div>
+
+    <h1 class="fadeIn second" style="padding: 50px">Sign Up</h1>
+
+    <!-- Login Form -->
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn third" %>
+
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password (#{@minimum_password_length} characters minimum)", class: "fadeIn fourth" %>
+
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password", class: "fadeIn fifth" %>
+
+      <div class="actions fadeIn sixth mt-4">
+        <%= f.submit "Sign Up", class: "" %>
+      </div>
+    <% end %>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="/users/sign_in">Sign In</a>
+      <br>
+      <a class="underlineHover" href="/users/password/new">Forgot Password?</a>
+    </div>
+  </div>
+</div>

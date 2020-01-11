@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_05_052236) do
+ActiveRecord::Schema.define(version: 2020_01_11_085013) do
 
   create_table "markers", force: :cascade do |t|
     t.decimal "lat"
@@ -36,18 +36,18 @@ ActiveRecord::Schema.define(version: 2020_01_05_052236) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "marker_1", default: false
-    t.boolean "marker_2", default: false
-    t.boolean "marker_3", default: false
-    t.boolean "marker_4", default: false
-    t.boolean "marker_5", default: false
-    t.boolean "marker_6", default: false
-    t.boolean "marker_7", default: false
-    t.boolean "marker_8", default: false
-    t.boolean "marker_9", default: false
-    t.boolean "marker_10", default: false
-    t.boolean "marker_11", default: false
-    t.boolean "marker_12", default: false
+    t.boolean "speaker_1", default: false
+    t.boolean "speaker_2", default: false
+    t.boolean "speaker_3", default: false
+    t.boolean "speaker_4", default: false
+    t.boolean "speaker_5", default: false
+    t.boolean "speaker_6", default: false
+    t.boolean "speaker_7", default: false
+    t.boolean "speaker_8", default: false
+    t.boolean "speaker_9", default: false
+    t.boolean "speaker_10", default: false
+    t.boolean "speaker_11", default: false
+    t.boolean "speaker_12", default: false
     t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

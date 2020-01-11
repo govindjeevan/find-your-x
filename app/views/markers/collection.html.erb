@@ -1,0 +1,57 @@
+<style>
+  #header-nav {
+    display: none;
+  }
+  .card {
+    width: 100%;
+  }
+   .footer {
+     position: fixed;
+     left: 0;
+     bottom: 0;
+     width: 100%;
+     color: white;
+     text-align: center;
+   }
+
+</style>
+
+<link rel="stylesheet" href="/assets/css/cool_cards.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h1>Your <i aria-hidden="true" class="fa fa-lg fa-times" style="color: red"></i> Collection</h1>
+<hr>
+<div class="cards-list" style="margin-bottom: 200px">
+
+  <% (1..12).each do |num| %>
+
+    <a href="/speakers/<%= num %>">
+    <div class="card">
+        <div class="card_image"> <img src="
+      <% if current_user["speaker_#{num}"] == true %>
+        /assets/<%= num %>.png
+      <% else %>
+        /assets/img/1.gif
+      <% end %>
+
+      " alt="X"/> </div>
+        <div class="card_title title-white">
+          <p></p>
+        </div>
+    </div>
+    </a>
+  <% end %>
+
+</div>
+
+<div class="footer text-center" style="color: white;">
+  <div style="background-color: #272829; height: 120px; margin-top: 80px;box-shadow:0px -7px 21px 22px rgba(0,0,0,0.44); padding: 20px">
+    <a href="/">
+      <h1 style="float: left; color: white"><i aria-hidden="true" class="fa fa-lg fa-search" style="margin-right: 20px; color: white"> </i>Find
+        More</h1>
+    </a>
+    <a href="http://www.tedxnitksurathkal.in/" style="">
+      <img src="/assets/img/logo.png" style="height: 100%;margin-right: 20px; float: right">
+    </a>
+  </div>
+</div>

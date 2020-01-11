@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900");
+
+head, body, p, a, th, td, span, strong {
+    font-size: 105%;
+    font-family: "Montserrat", sans-serif;
+}
+
+html, body {
+    /*background-color: #f4f4f4;*/
+}
+
+
 /*// Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
 

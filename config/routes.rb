@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
   resources :speakers
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+    passwords: 'users/passwords'
+  }
+
   resources :markers do
     collection do
       get 'experience'
       get 'feed'
       get 'feed_webapp'
+      get 'collection'
     end
     member do
       get 'found'

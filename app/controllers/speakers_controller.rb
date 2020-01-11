@@ -1,9 +1,9 @@
 class SpeakersController < ApplicationController
   protect_from_forgery except: [:index]
   before_action :authenticate_user!, except: [:index]
-  before_action :set_speaker, only: [:show, :edit, :update, :destroy]
   before_action :check_admin_access, except: [:show]
   before_action :check_show_access, only: [:show]
+  before_action :set_speaker, only: [:show, :edit, :update, :destroy]
 
   # GET /speakers
   # GET /speakers.json
@@ -78,9 +78,9 @@ class SpeakersController < ApplicationController
   end
 
   def check_show_access
-    return if current_user["marker_#{@speaker.id}"] == true
+    return if (current_user["speaker_#{params[:id]}"] == true) || current_user.admin?
 
-    redirect_back(fallback_location: :root, alert: 'You are not allowed to access this page.')
+    redirect_to(collection_markers_path, alert: 'You are not allowed to access this page.')
   end
 
   def check_admin_access
