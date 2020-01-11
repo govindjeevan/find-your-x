@@ -1,5 +1,10 @@
 <style>
-  #Button {
+  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900");
+
+  body {
+    font-family: "Montserrat", sans-serif;
+  }
+  .button {
     display: inline-block;
     padding: 0.5em 1.5em;
     margin: 1.5em 0.1em 0.1em 0;
@@ -7,7 +12,6 @@
     border-radius: 2em;
     box-sizing: border-box;
     text-decoration: none;
-    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: #FFFFFF;
     background: #F14E4E;
@@ -17,16 +21,30 @@
     transition: all 0.2s;
   }
 
-  #Button:disabled {
+  .link {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    margin: 20em 0.1em 0.1em 0;
+    border: 0.16em solid rgba(255, 255, 255, 0);
+    border-radius: 2em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: 300;
+    color: #FFFFFF;
+    background: #F14E4E;
+    font-size: 1.5em;
+    text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+    text-align: center;
+  }
+
+  .button:disabled {
     background: #F1A19A;
   }
 
-  #Button:hover {
+  .button:hover {
     border-color: rgba(255, 255, 255, 1);
   }
 </style>
-
-
 
 <a-scene
   cursor='fuse: false'
@@ -41,9 +59,15 @@
   <a-camera gps-camera rotation-reader>
   </a-camera>
   <div style="position: relative; top: 10px; text-align: center; z-index: 1;">
-    <button id="Button" onclick="refresh()">
+    <button class="button" id="Button" onclick="refresh()">
       Please wait...
     </button>
+    <br>
+    <a href="/markers/collection">
+      <button class="link">
+        See your X's
+      </button>
+    </a>
   </div>
 </a-scene>
 

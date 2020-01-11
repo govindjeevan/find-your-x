@@ -17,7 +17,7 @@ class MarkersController < ApplicationController
   end
 
   def found
-    current_user.update("marker_#{@marker.id}": true)
+    current_user.update("marker_#{@marker.speaker}": true)
     redirect_to speaker_path(@marker.speaker), notice: 'You have found an X!'
   end
 
@@ -28,6 +28,10 @@ class MarkersController < ApplicationController
   end
 
   def speakers
+    @speakers = Speaker.all
+  end
+
+  def collection
     @speakers = Speaker.all
   end
 
