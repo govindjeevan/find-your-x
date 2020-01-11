@@ -1,0 +1,43 @@
+<style>
+  #header-nav {
+    display: none;
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="/assets/css/devise.css">
+
+<div class="wrapper fadeInDown" style="width: 100vw; padding-left: 60px; padding-right: 60px">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/img/logo-black.png" id="icon" alt="User Icon"/>
+    </div>
+
+    <!-- Login Form -->
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn second" %>
+
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password", class: "fadeIn third" %>
+
+      <div class="field fadeIn fourth" style="padding: 20px">
+      <%= f.label "Remember me?" %>
+      <%= f.check_box :remember_me, class: "form-control" %>
+      </div>
+
+      <div class="actions fadeIn fifth">
+        <%= f.submit "Sign in", class: "" %>
+      </div>
+    <% end %>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="/users/sign_up">Sign Up</a>
+      <br>
+      <a class="underlineHover" href="/users/password/new">Forgot Password?</a>
+    </div>
+
+  </div>
+</div>

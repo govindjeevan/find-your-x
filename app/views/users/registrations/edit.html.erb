@@ -1,0 +1,44 @@
+<style>
+  #header-nav {
+    display: none;
+  }
+</style>
+
+<link rel="stylesheet" type="text/css" href="/assets/css/devise.css">
+
+<div class="wrapper fadeInDown" style="width: 100vw; padding-left: 60px; padding-right: 60px">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/img/logo-black.png" id="icon" alt="User Icon"/>
+    </div>
+
+    <!-- Login Form -->
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+
+      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn second" %>
+
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "New Password (ignore for no changes)", class: "fadeIn third" %>
+
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm New Password", class: "fadeIn fourth" %>
+
+      <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Current Password (to confirm changes)", class: "fadeIn fourth" %>
+
+      <div class="actions fadeIn sixth">
+        <%= f.submit "Update", class: "" %>
+      </div>
+    <% end %>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="/">Play Find Your X</a>
+    </div>
+  </div>
+</div>

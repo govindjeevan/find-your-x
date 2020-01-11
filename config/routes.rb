@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :speakers
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
+
+
   resources :markers do
     collection do
       get 'experience'
