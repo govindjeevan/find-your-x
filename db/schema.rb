@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 2020_01_12_093943) do
 
   create_table "markers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.decimal "lat", precision: 15, scale: 13
-    t.decimal "lng", precision: 15, scale: 13
+    t.decimal "lat", precision: 30, scale: 20
+    t.decimal "lng", precision: 30, scale: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "speaker"
