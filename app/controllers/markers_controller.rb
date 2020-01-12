@@ -17,7 +17,7 @@ class MarkersController < ApplicationController
   end
 
   def found
-    current_user.update("marker_#{@marker.speaker}": true)
+    current_user.update("speaker_#{@marker.speaker}": true)
     redirect_to speaker_path(@marker.speaker), notice: 'You have found an X!'
   end
 
