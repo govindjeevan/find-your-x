@@ -22,13 +22,15 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
-      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn third" %>
+      <%= f.text_field :name, autocomplete: "name", placeholder: "Name", class: "fadeIn third" %>
 
-      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password (#{@minimum_password_length} characters minimum)", class: "fadeIn fourth" %>
+      <%= f.email_field :email, autocomplete: "email", placeholder: "E-mail", class: "fadeIn fourth" %>
 
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password", class: "fadeIn fifth" %>
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password (#{@minimum_password_length} characters minimum)", class: "fadeIn fifth" %>
 
-      <div class="actions fadeIn sixth mt-4">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password", class: "fadeIn sixth" %>
+
+      <div class="actions fadeIn seventh mt-4">
         <%= f.submit "Sign Up", class: "" %>
       </div>
     <% end %>
