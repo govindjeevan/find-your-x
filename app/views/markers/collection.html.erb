@@ -19,13 +19,24 @@
 <link rel="stylesheet" href="/assets/css/cool_cards.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<div class="d-inline-block">
 <h1>Your <i aria-hidden="true" class="fa fa-lg fa-times" style="color: red"></i> Collection</h1>
+</div>
+<div class="d-inline-block float-right">
+<% if user_signed_in? %>
+    <h1>
+      <%= link_to 'Log Out', destroy_user_session_path, method: :delete, style: "color: grey;text-decoration: none" %>
+    </h1>
+<% end %>
+</div>
 <hr>
 <div class="cards-list" style="margin-bottom: 200px">
 
   <% (1..12).each do |num| %>
 
-    <a href="/speakers/<%= num %>">
+    <% if current_user["speaker_#{num}"] == true %>
+      <a href="/speakers/<%= num %>">
+    <% end %>
     <div class="card">
         <div class="card_image"> <img src="
       <% if current_user["speaker_#{num}"] == true %>
@@ -39,7 +50,9 @@
           <p></p>
         </div>
     </div>
+    <% if current_user["speaker_#{num}"] == true %>
     </a>
+    <% end %>
   <% end %>
 
 </div>
