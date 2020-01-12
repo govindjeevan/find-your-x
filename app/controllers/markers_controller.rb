@@ -2,7 +2,7 @@ class MarkersController < ApplicationController
   protect_from_forgery except: [:feed]
   before_action :authenticate_user!, except: [:feed]
   before_action :set_marker, only: %i[found show edit update destroy]
-  before_action :check_admin_access, except: %i[experience feed feed_webapp found]
+  before_action :check_admin_access, except: %i[experience feed feed_webapp found collection]
   layout :resolve_layout
 
   def feed
