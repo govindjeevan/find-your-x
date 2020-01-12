@@ -32,7 +32,6 @@ class MarkersController < ApplicationController
   end
 
   def collection
-    @speakers = Speaker.all
   end
 
   # GET /markers/1
