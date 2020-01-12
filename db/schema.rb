@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_11_165701) do
+ActiveRecord::Schema.define(version: 2020_01_12_090120) do
 
   create_table "markers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.decimal "lat", precision: 10
-    t.decimal "lng", precision: 10
+    t.decimal "lat", precision: 15, scale: 13
+    t.decimal "lng", precision: 15, scale: 13
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "speaker"
