@@ -102,7 +102,7 @@ function renderPlaces(places) {
             text.setAttribute('id', place.id);
             text.setAttribute('title', place.name);
             text.setAttribute('href', "/markers/" + place.id + "/found");
-            text.setAttribute('scale', '2.5 2.5 2.55');
+            text.setAttribute('scale', '5 5 5');
             text.setAttribute('visible', 'true');
             text.addEventListener('loaded', () => {
                 window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
