@@ -38,7 +38,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 #gem 'geocoder'
 gem 'geokit-rails'
 
+# Auth
 gem 'devise'
+gem 'omniauth-google-oauth2'
 
 # JQuery
 gem 'jquery-rails'
