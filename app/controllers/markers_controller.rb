@@ -10,7 +10,7 @@ class MarkersController < ApplicationController
   end
 
   def feed_webapp
-    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f, 0.1)
+    @markers = Marker.feed(params[:lat].to_f, params[:lng].to_f, 0.05)
   end
 
   def experience
