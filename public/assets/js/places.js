@@ -1,19 +1,44 @@
 window.onload = () => {
     refresh();
+    setInterval(set_accuracy, 2000);
 };
+
+function set_accuracy(){
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    function success(position) {
+        document.getElementById("location").innerHTML = "Accurate to " + Math.floor(position.coords.accuracy) + " meters.";
+    }
+    navigator.geolocation.getCurrentPosition(success, error, options);
+}
 
 function refresh(){
     document.getElementById("Button").disabled = true;
     document.getElementById("Button").innerHTML = "Please wait...";
-    setTimeout(function () {
-        document.getElementById("Button").disabled = false;
 
-        document.getElementById("Button").innerHTML = "Refresh X's around you";
-    },5000);
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
 
-    navigator.geolocation.getCurrentPosition(function (position) {
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    function success(position) {
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
+
+        // var accuracy = Math.floor(position.coords.accuracy);
+
+        // document.getElementById("location").innerHTML = "Accurate to " + accuracy + " meters.";
 
         getPlaces(lat, lng).then(function (data) {
             var places = [];
@@ -29,8 +54,13 @@ function refresh(){
                 places.push(obj);
             }
             renderPlaces(places);
+
+            document.getElementById("Button").disabled = false;
+            document.getElementById("Button").innerHTML = "Refresh X's <br> (There is/are " + places.length + " around you)";
         });
-    });
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
 function getPlaces(lat, lng) {
@@ -43,7 +73,7 @@ function renderPlaces(places) {
     let scene = document.querySelector('a-scene');
 
     $("a-link").each(function () {
-        $(this).attr("visible", false);
+        $(this).attr("visible", 'false');
     });
 
     places.forEach((place) => {
@@ -72,14 +102,12 @@ function renderPlaces(places) {
             text.setAttribute('id', place.id);
             text.setAttribute('title', place.name);
             text.setAttribute('href', "/markers/" + place.id + "/found");
-            text.setAttribute('scale', '5 5 5');
+            text.setAttribute('scale', '2.5 2.5 2.55');
             text.setAttribute('visible', 'true');
             text.addEventListener('loaded', () => {
                 window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
             });
-
             scene.appendChild(text);
-
         }
     });
 }
