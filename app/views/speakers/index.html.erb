@@ -5,6 +5,7 @@
 <table>
   <thead>
   <tr>
+    <th>ID</th>
     <th>Name</th>
     <th>Title</th>
     <th>Desc</th>
@@ -15,6 +16,7 @@
   <tbody>
   <% @speakers.each do |speaker| %>
     <tr>
+      <td><%= speaker.id %></td>
       <td><%= speaker.name %></td>
       <td><%= speaker.title %></td>
       <td><%= speaker.desc %></td>

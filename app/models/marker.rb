@@ -49,4 +49,12 @@ class Marker < ApplicationRecord
   end
 
 
+  def speaker_name
+    speaker = Speaker.find(self.speaker).name
+    if speaker
+      return speaker
+    else
+      return ""
+    end
+  end
 end
