@@ -106,6 +106,19 @@ class MarkersController < ApplicationController
     redirect_back(fallback_location: :root, alert: 'You are not allowed to access this page.')
   end
 
+  def leaderboard
+    @leaders = Hash.new
+    User.all.each do |x|
+      if x.name.present?
+        @leaders[x.name] = x.x_count
+      else
+        @leaders[x.email] = x.x_count
+      end
+    end
+    @leaders = @leaders.sort_by { |_key, value| value }.to_h
+  end
+
+
   def resolve_layout
     case action_name
     when "experience"
