@@ -1,7 +1,7 @@
 class SpeakersController < ApplicationController
   protect_from_forgery except: [:index]
   before_action :authenticate_user!, except: [:index]
-  before_action :check_admin_access, except: [:show]
+  before_action :check_admin_access, except: [:show, :index]
   before_action :check_show_access, only: [:show]
   before_action :set_speaker, only: [:show, :edit, :update, :destroy]
 
