@@ -2,17 +2,19 @@
   #header-nav {
     display: none;
   }
+
   .card {
     width: 100%;
   }
-   .footer {
-     position: fixed;
-     left: 0;
-     bottom: 0;
-     width: 100%;
-     color: white;
-     text-align: center;
-   }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+  }
 
 </style>
 
@@ -20,39 +22,37 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="d-inline-block">
-<h1>Your <i aria-hidden="true" class="fa fa-lg fa-times" style="color: red"></i> Collection</h1>
+  <h1>Your <i aria-hidden="true" class="fa fa-lg fa-times" style="color: red"></i> Collection</h1>
 </div>
 <div class="d-inline-block float-right">
-<% if user_signed_in? %>
+  <% if user_signed_in? %>
     <h1>
       <%= link_to 'Log Out', destroy_user_session_path, method: :delete, style: "color: grey;text-decoration: none" %>
     </h1>
-<% end %>
+  <% end %>
 </div>
 <hr>
 <div class="cards-list" style="margin-bottom: 200px">
 
   <% (1..12).each do |num| %>
-
     <% if current_user["speaker_#{num}"] == true %>
       <a href="/speakers/<%= num %>">
+    <% else %>
+      <a href="#">
     <% end %>
     <div class="card">
-        <div class="card_image"> <img src="
+      <div class="card_image"><img src="
       <% if current_user["speaker_#{num}"] == true %>
         /assets/<%= num %>.png
       <% else %>
         /assets/img/1.gif
       <% end %>
-
-      " alt="X"/> </div>
-        <div class="card_title title-white">
-          <p></p>
-        </div>
+      " alt="X"/></div>
+      <div class="card_title title-white">
+        <p></p>
+      </div>
     </div>
-    <% if current_user["speaker_#{num}"] == true %>
     </a>
-    <% end %>
   <% end %>
 
 </div>
@@ -60,7 +60,8 @@
 <div class="footer text-center" style="color: white;">
   <div style="background-color: #272829; height: 120px; margin-top: 80px;box-shadow:0px -7px 21px 22px rgba(0,0,0,0.44); padding: 20px">
     <a href="/">
-      <h1 style="float: left; color: white"><i aria-hidden="true" class="fa fa-lg fa-search" style="margin-right: 20px; color: white"> </i>Find
+      <h1 style="float: left; color: white">
+        <i aria-hidden="true" class="fa fa-lg fa-search" style="margin-right: 20px; color: white"> </i>Find
         More</h1>
     </a>
     <a href="http://www.tedxnitksurathkal.in/" style="">
