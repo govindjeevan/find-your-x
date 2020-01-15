@@ -13,7 +13,6 @@ Rails.application.routes.draw do
       get 'feed'
       get 'feed_webapp'
       get 'collection'
-      get 'leaderboard'
     end
     member do
       get 'found'

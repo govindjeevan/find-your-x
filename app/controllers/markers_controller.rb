@@ -32,6 +32,7 @@ class MarkersController < ApplicationController
   end
 
   def collection
+    @leaders = User.all.sort_by {|user| user.x_count }.reverse.first(10)
   end
 
   # GET /markers/1
@@ -107,15 +108,7 @@ class MarkersController < ApplicationController
   end
 
   def leaderboard
-    @leaders = Hash.new
-    User.all.each do |x|
-      if x.name.present?
-        @leaders[x.name] = x.x_count
-      else
-        @leaders[x.email] = x.x_count
-      end
-    end
-    @leaders = @leaders.sort_by { |_key, value| value }.to_h
+    @leaders = User.all.sort_by {|user| user.x_count }.reverse.first(10)
   end
 
 

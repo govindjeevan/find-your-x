@@ -32,7 +32,7 @@
   <% end %>
 </div>
 <hr>
-<div class="cards-list" style="margin-bottom: 200px">
+<div class="cards-list">
 
   <% (1..12).each do |num| %>
     <% if current_user["speaker_#{num}"] == true %>
@@ -56,6 +56,40 @@
   <% end %>
 
 </div>
+
+<div class="" style="background-color: white;margin-top:30px;margin-bottom: 200px; width: 100%; padding: 20px">
+  <h3>Leaderboard</h3>
+  <hr>
+  <table style="width: 100%">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Collection</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @leaders.each do |l| %>
+      <% if l.present? %>
+        <tr>
+          <td>
+            <% if l.name.present? %>
+              <%= l.name %>
+            <% else %>
+              <%= l.email %>
+            <% end %>
+          </td>
+          <td>
+            <%= l.x_count %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+
 
 <div class="footer text-center" style="color: white;">
   <div style="background-color: #272829; height: 120px; margin-top: 80px;box-shadow:0px -7px 21px 22px rgba(0,0,0,0.44); padding: 20px">
